@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model car {
+  id         Int       @id @default(autoincrement())
+  client_id  Int
+  car_make   String    @db.VarChar(150)
+  car_year   String    @db.VarChar(150)
+  car_model  String    @db.VarChar(150)
+  car_trim   String    @db.VarChar(150)
+  car_plate  String    @db.VarChar(20)
+  created_at DateTime? @default(now()) @db.DateTime(0)
+  updated_at Decimal?  @db.Decimal(10, 0)
+}
+
+model client {
+  id         Int       @id @default(autoincrement())
+  name       String    @db.VarChar(150)
+  lastname   String    @db.VarChar(150)
+  dni        String    @db.VarChar(20)
+  mail       String    @db.VarChar(150)
+  phone      String    @db.VarChar(20)
+  created_at DateTime? @default(now()) @db.DateTime(0)
+  updated_at Decimal?  @db.Decimal(10, 0)
+}
+
+model debt {
+  id                Int       @id @default(autoincrement())
+  client_id         Int
+  terms_conditions  String    @db.VarChar(1)
+  estimated_debt    Float     @db.Float
+  date_appointment  DateTime  @db.Date
+  adviser_id        Int
+  proposed_amount   Float     @db.Float
+  accept_offer      String    @db.VarChar(1)
+  accept_stellantis String    @db.VarChar(1)
+  created_at        DateTime? @default(now()) @db.DateTime(0)
+  updated_at        Decimal?  @db.Decimal(10, 0)
+}
+
+model history_steps {
+  id          Int      @id @default(autoincrement())
+  debt_id     Int
+  step        String   @db.VarChar(150)
+  description String   @db.Text
+  value       String   @db.VarChar(150)
+  created_at  DateTime @db.DateTime(0)
+  updated_at  DateTime @db.DateTime(0)
+}
