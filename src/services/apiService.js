@@ -14,7 +14,7 @@ class ApiService {
   }
 
   async debug () {
-    debug('stellantis-api')
+    debug('Debugging API')
   }
 }
 
