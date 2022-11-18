@@ -45,6 +45,19 @@ async function main() {
     },
   })
 
+  const adviser1 = await prisma.user.upsert({
+    where: { dni: "adviser.1@olxautos.com" },
+    update: {},
+    create: {
+      email: 'adviser.1@olxautos.com',
+      name: 'adviser',
+      lastname: '1',
+      role: 'adviser',
+      password: '$2b$10$RqvQbH1M6ieFmHgp6vJxmuuPMB4fyPoglJrJ5eVWeZLoMgyBGcr32',
+      first_logged_in: false,
+    },
+  })
+
   const debt1 = await prisma.debt.upsert({
     where: { id: 1 },
     update: {},
@@ -53,7 +66,7 @@ async function main() {
       terms_conditions: '0',
       estimated_debt: 10000000,
       date_appointment: new Date('2022-11-01'),
-      adviser_id: 1,
+      adviser_id: 3,
       proposed_amount: 9800000,
       accept_offer: '0',
       accept_stellantis: '0',
@@ -118,7 +131,8 @@ async function main() {
   console.log({ 
     victor, 
     user_client1, 
-    client1, 
+    client1,
+    adviser1, 
     debt1, 
     step1, 
     step2, 

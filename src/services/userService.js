@@ -19,17 +19,46 @@ class UserService {
   }
 
   async findAll () {
-    const findedUsers = await prisma.user.findMany({})
-    return findedUsers
+    const foundUsers = await prisma.user.findMany({})
+    return foundUsers
+  }
+
+  async findById (id) {
+    const foundUser = await prisma.user.findUnique({
+      where: {
+        id: Number(id)
+      }
+    })
+    return foundUser
+  }
+
+  async findByEmail (email) {
+    const foundUser = await prisma.user.findUnique({
+      where: {
+        email
+      }
+    })
+    return foundUser
   }
 
   async findAllNotDeleted () {
-    const findedUsers = await prisma.user.findAll({
+    const foundUsers = await prisma.user.findMany({
       where: {
-        created_at: null
+        deleted_at: null
       }
     })
-    return findedUsers
+    return foundUsers
+  }
+
+  async findAllDeleted () {
+    const foundUsers = await prisma.user.findMany({
+      where: {
+        NOT: {
+          deleted_at: null
+        }
+      }
+    })
+    return foundUsers
   }
 
   async create (user) {
@@ -39,13 +68,23 @@ class UserService {
     return userCreated
   }
 
+  async update(id, changes) {
+    const userUpdated = await prisma.user.update({
+      where: {
+        id: Number(id)
+      },
+      data: changes
+    })
+    return userUpdated
+  }
+
   async delete (id) {
-    const user = await prisma.user.delete({
+    const userDeleted = await prisma.user.delete({
       where: {
         id: Number(id)
       }
     })
-    return user
+    return userDeleted
   }
 }
 
